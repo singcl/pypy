@@ -3,7 +3,7 @@
 
 """"if else 流程控制"""
 
-x = int(raw_input(u"请输入一个整数"))
+x = int(raw_input(u"请输入一个整数:"))
 if x < 0:
     x = 0
     print('Negative changed to zero')
