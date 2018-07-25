@@ -15,3 +15,12 @@ for n in range(2, 10):
         print n, 'is a prime number'
 
 # W: 14, 4: Else clause on loop without a break statement (useless-else-on-loop)
+
+# continue
+for num in range(2, 10):
+    if num % 2 == 0:
+        print "Found an even number", num
+        continue
+    print "Found a old number", num
+else:
+    print "结束啦！"
