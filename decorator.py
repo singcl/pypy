@@ -11,16 +11,18 @@ def guess_win(func):
         result = func(*args, **kwargs)
         print "天台已满，请排队！"
         return result
-    return rooftop_status
+
+    status = rooftop_status
+    return status
 
 
 @guess_win
-def german_team(arg):
+def gg_team(arg):
     print('{}必胜！'.format(arg))
     return '赢了会所嫩模！输了下海干活！'
 
 
-x = german_team('德国')
-# y = german_team('西班牙')
+x = gg_team('德国')
+# y = gg_team('西班牙')
 
 print x
