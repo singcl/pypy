@@ -78,3 +78,29 @@ def cheeseshop(kind, *args, **kwargs):
 
 cheeseshop("Limburger", "It's very runny, sir.", "It's really very, VERY runny, sir.", shopkeeper='Michael Palin',
            client="John Cleese", sketch="Cheese Shop Sketch")
+
+# 参数列表的分拆
+args = [3, 6]
+range(*args)
+
+
+def parrot(voltage, state='a stiff', action='voom'):
+    """参数分分拆"""
+    print "-- This parrot wouldn't", action,
+    print "if you put", voltage, "volts through it.",
+    print "E's", state, "!"
+
+
+# 分拆map结构作为函数的参数
+d = {"voltage": "four million", "state": "bleedin' demised", "action": "VOOM"}
+parrot(**d)
+
+
+# Lambda 形式
+def  make_incrementor(n):
+    """Lambda函数"""
+    return lambda x: x + n
+
+
+f = make_incrementor(42)
+f(0)
