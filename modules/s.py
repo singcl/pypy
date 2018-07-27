@@ -6,4 +6,4 @@ from fibo import fibo2
 
 if __name__ == "__main__":
     x = fibo2(int(sys.argv[1]))
-    print x
+    print (x)
