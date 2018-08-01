@@ -37,8 +37,8 @@ class TestHTTPHandler(BaseHTTPRequestHandler):
 
 # 启动服务函数
 def start_server(port):
-        http_server = HTTPServer(('', int(port)), TestHTTPHandler)
-        http_server.serve_forever() # 设置一直监听并接收请求
+    http_server = HTTPServer(('', int(port)), TestHTTPHandler)
+    http_server.serve_forever()  # 设置一直监听并接收请求
 
 
 # os.chdir('static')  #改变工作目录到 static 目录
