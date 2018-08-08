@@ -7,9 +7,23 @@ import os
 import shutil
 from datetime import datetime
 
-save_folder = dir_path = os.path.dirname(os.path.realpath(__file__)) + "\wallpapers"
-wallpaper_folder = os.getenv('LOCALAPPDATA') + ('Packages\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy' +
-                                                'LocalState\Assets')
+
+def mkdir(path):
+    folder = os.path.exists(path)
+    if not folder:
+        os.makedirs(path)
+        print "---  new folder...  ---"
+        print "---  OK  ---"
+    else:
+        print "---  There is this folder!  ---"
+
+
+mkdir('./wallpapers')
+
+save_folder = dir_path = os.path.dirname(
+    os.path.realpath(__file__)) + "\wallpapers"
+wallpaper_folder = os.getenv('LOCALAPPDATA') + ('\Packages\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy' +
+                                                '\LocalState\Assets')
 wallpapers = os.listdir(wallpaper_folder)
 for wallpaper in wallpapers:
     wallpaper_path = os.path.join(wallpaper_folder, wallpaper)
