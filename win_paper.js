@@ -1,4 +1,10 @@
-// 获取win10壁纸js版
+/**
+ * @description 获取win10壁纸js版
+ * @author singcl <https://github.com/singcl/>
+ * @version 0.0.1
+ * @since 0.0.1
+ */
+
 var fs = require('fs');
 
 // win10上壁纸原始目录
