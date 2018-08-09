@@ -1,8 +1,8 @@
 /**
  * @description 获取win10壁纸js版
  * @author singcl <https://github.com/singcl/>
- * @version 0.0.1
- * @since 0.0.1
+ * @version 0.0.2
+ * @since 0.0.2
  */
 
 var fs = require('fs');
@@ -15,10 +15,6 @@ var originWallpaperFolder =
 // 我们即将保存的目录 - 支持多级目录
 var paperFolder = './win/wallpaper/xx/xxx/xx';
 
-// 同步创建dest目录 - 支持创建多级目录
-// 如果目录存在则不做处理，不存在则创建
-createPathSync(paperFolder);
-
 // fs.exists 已废弃的接口，推荐使用 fs.access() 代替 fs.exists()。
 // @link http://nodejs.cn/api/fs.html#fs_fs_exists_path_callback
 // 直接读取目录, 根据错误信息判断目录是否存在
@@ -27,6 +23,10 @@ fs.readdir(originWallpaperFolder, function(err, files) {
         console.error(err);
         return;
     }
+
+    // 同步创建dest目录 - 支持创建多级目录
+    // 如果目录存在则不做处理，不存在则创建
+    createPathSync(paperFolder);
 
     const fileNames = files.map((item) => `${originWallpaperFolder}\\${item}`);
     console.log(fileNames);
