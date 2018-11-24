@@ -13,10 +13,12 @@ virtualenv -p C:/Python27/python.exe py2
 # Python3x 虚拟环境
 virtualenv -p C:/Python3x/python.exe py3
 
-# activate
+# activate in cmd
 cd py3/Scripts/
-
 activate
+
+# activate in bash
+source ./py3/Scripts/activate
 ```
 
 ## Vscode 中使用 virtualenv
