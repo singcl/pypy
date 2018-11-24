@@ -16,5 +16,5 @@ virtualenv -p C:/Python3x/python.exe py3
 # activate
 cd py3/Scripts/
 
-./activate
+activate
 ```
