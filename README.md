@@ -18,3 +18,7 @@ cd py3/Scripts/
 
 activate
 ```
+
+## Vscode 中使用 virtualenv
+
+https://segmentfault.com/q/1010000011089735
