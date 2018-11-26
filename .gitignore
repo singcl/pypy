@@ -1,4 +1,7 @@
+# Python 27 virtual env
 venv/
+# Python 3x virtual env
+py3/
 #
 .idea
 *.pyc
