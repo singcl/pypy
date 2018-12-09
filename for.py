@@ -3,4 +3,4 @@
 
 words = ['cat', 'window', 'sing']
 for w in words:
-    print w, len(w)
+    print(w, len(w))
