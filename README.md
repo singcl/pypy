@@ -35,3 +35,14 @@ pip install pycryptodome
 # 如果之前安装过crypto 模块的话先卸载crypto在手动删除site-packages 下的crypto文件 在安装pycryotodome
 # 不然会安装失败
 ```
+
+#生成requirements.txt
+python项目中必须包含一个 requirements.txt 文件，用于记录所有依赖包及其精确的版本号。以便新环境部署。
+
+```sh
+# 自动生成
+(venv) $ pip freeze > requirements.txt
+# 安装
+(venv) $ pip install -r requirements.txt
+```
+
