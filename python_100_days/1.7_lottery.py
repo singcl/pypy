@@ -26,8 +26,8 @@ def display(balls):
 
 def random_select():
     """
-        随机选择一组号码
-        """
+    随机选择一组号码
+    """
     red_balls = [x for x in range(1, 34)]
     selected_balls = []
 
