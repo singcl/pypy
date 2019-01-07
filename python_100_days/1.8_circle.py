@@ -44,5 +44,5 @@ if __name__ == "__main__":
     big = Circle(radius + 3)
 
     print("围墙的造价为： ￥%.2f元" % (big.perimeter * 32.5))
-    print("过道的造价为： ￥%.2f元" % (big.area - small.area) * 25)
+    print("过道的造价为： ￥%.2f元" % ((big.area - small.area) * 25))
 
