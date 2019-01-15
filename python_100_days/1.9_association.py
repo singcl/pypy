@@ -12,6 +12,7 @@ Date: 2019-01-14
 
 from math import sqrt
 
+
 class Point(object):
 
     def __init__(self, x=0, y=0):
@@ -35,6 +36,32 @@ class Point(object):
         return "(%s, %s)" % (str(self._x), str(self._y))
 
 
+class Line(object):
+    def __init__(self, start=Point(0, 0), end=Point(0, 0)):
+        self._start = start
+        self._end = end
+
+    @property
+    def start(self):
+        return self._start
+
+    @start.setter
+    def start(self, start):
+        self._start = start
+
+    @property
+    def end(self):
+        return self._end
+
+    @end.setter
+    def end(self, end):
+        self._end = end
+
+    @property
+    def length(self):
+        return self._start.distance_to(self._end)
+
+
 if __name__ == "__main__":
     p1 = Point(3, 5)
     print(p1)
@@ -42,3 +69,8 @@ if __name__ == "__main__":
     print(p2)
     print(p1.distance_to(p2))
 
+    line = Line(p1, p2)
+    print(line.length)
+    line.start.move_to(2, 1)
+    line.end = Point(1, 2)
+    print(line.length)
