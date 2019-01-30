@@ -20,4 +20,5 @@ except FileNotFoundError:
     print("无法打开文件", filename)
 else:
     for item in data:
+        # "%-30s 左对齐 最多显示30个字符
         print("%-30s%-20s%-10s" % (item[0], item[1], item[2]))
