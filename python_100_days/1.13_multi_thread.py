@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-异步I/O操作 - 多线程
+多线程
 Version: 0.1
 Author: singcl
 Date: 2019-3-18

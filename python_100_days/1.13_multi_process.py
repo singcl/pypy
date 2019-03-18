@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-异步I/O操作 - 多进程
+多进程
 我们启动两个进程，一个输出Ping，一个输出Pong，两个进程输出的Ping和Pong加起来一共10个。听起来很简单吧，但是如果这样写可是错的哦。
 Version: 0.1
 Author: singcl
