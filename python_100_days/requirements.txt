@@ -1,6 +1,8 @@
 astroid==1.6.5
 autopep8==1.4.3
 backports.functools-lru-cache==1.5
+beautifulsoup4==4.7.1
+bs4==0.0.1
 certifi==2018.10.15
 chardet==3.0.4
 click==6.7
@@ -25,6 +27,7 @@ requests==2.20.1
 shellescape==3.4.1
 singledispatch==3.4.0.3
 six==1.11.0
+soupsieve==1.9.1
 typed-ast==1.1.0
 urllib3==1.24.1
 Werkzeug==0.14.1
