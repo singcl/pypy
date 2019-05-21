@@ -1,0 +1,13 @@
+setup.py
+project.egg-info/PKG-INFO
+project.egg-info/SOURCES.txt
+project.egg-info/dependency_links.txt
+project.egg-info/entry_points.txt
+project.egg-info/top_level.txt
+scrapy_rumen/__init__.py
+scrapy_rumen/items.py
+scrapy_rumen/middlewares.py
+scrapy_rumen/pipelines.py
+scrapy_rumen/settings.py
+scrapy_rumen/spiders/__init__.py
+scrapy_rumen/spiders/itcast.py
