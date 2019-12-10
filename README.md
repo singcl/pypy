@@ -19,7 +19,12 @@ activate
 
 # activate in bash
 source ./py3/Scripts/activate
+
+# bash 查看当前python位置
+which python
 ```
+
+如果*source ./py3/Scripts/activate* 切换环境无效的话，删除虚拟环境再重新新建虚拟环境
 
 ## Vscode 中使用 virtualenv
 

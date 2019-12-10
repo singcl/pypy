@@ -9,7 +9,7 @@ from flask.ext.login import login_required, current_user
 def index():
     return render_template("index.html")
 
-@app.route(/dashboard)
+@app.route("/dashboard")
 @login_required
 def account():
     return render_template("account.html")
