@@ -27,11 +27,12 @@ async def download(url):
 def main():
     loop = asyncio.get_event_loop()
     urls = [
-        'https://www.baidu.com',
-        'http://www.sohu.com/',
-        'http://www.sina.com.cn/',
+        # 'https://www.baidu.com',
+        # 'http://www.sohu.com/',
+        # 'http://www.sina.com.cn/',
+        # 'https://www.jd.com/',
         'https://www.taobao.com/',
-        'https://www.jd.com/'
+        'https://imcoco.top'
     ]
     corutines = [download(url) for url in urls]
     loop.run_until_complete(asyncio.wait(corutines))
