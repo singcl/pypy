@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 """
 需要注意的是1.14_client_socket_server.py服务器并没有使用多线程或者异步I/O的处理方式，
 这也就意味着当服务器与一个客户端处于通信状态时，其他的客户端只能排队等待。
@@ -8,12 +10,18 @@
 __author__ = "singcl"
 
 from socket import socket, SOCK_STREAM, AF_INET
-from base64 import b64decode
+from base64 import b64encode
 from json import dumps
 from threading import Thread
+import os
 
 def main():
-    pic = './mm.png'
+    # 获取当前文件的绝对路径直接
+    # os.path.abspath(__file__)
+    # 获取当前文件夹所在的路径 直接
+    # os.path.dirname(os.path.abspath(__file__))
+
+    pic = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'mm.png')
 
     # 自定义线程类
     class FileTransferHandler(Thread):
@@ -43,7 +51,7 @@ def main():
     print('服务器启动开始监听...')
     with open(pic, 'rb') as f:
         # 将二进制数据处理成base64再解码成字符串
-        data = b64decode(f.read()).decode('utf-8', 'ignore')
+        data = b64encode(f.read()).decode('utf-8')
 
     while True:
         client, addr = server.accept()
