@@ -16,8 +16,11 @@ def main():
     message['From'] = Header('singcl', 'utf-8')
     message['To'] = Header('Singcl2 qq', 'utf-8')
     message['Subject'] = Header('Python实验邮件', 'utf-8')
-    smtper = SMTP('smtp.126.com')
+    smtper = SMTP('smtp.163.com')
     # 请自行修改下面的登录口令
+    #当传入发送邮箱正确的用户名和密码时，总是收到到：550 User has no permission这样的错误，
+    #其实我们用Java发送邮件时相当于自定义客户端根据用户名和密码进行登录，然后使用SMTP服务发送邮件。但新注册的163邮件默认是不开启客户端授权验证的（对自定的邮箱大师客户端默认开启），
+    #因此登录总是会被拒绝，验证没有权限。解决办法是进入163邮箱，进入邮箱中心——客户端授权密码，选择开启即可
     smtper.login(sender, input("请输入密码:"))
     smtper.sendmail(sender, receivers, message.as_string())
     print("邮件发送完成！")
