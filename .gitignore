@@ -2,6 +2,7 @@
 venv/
 # Python 3x virtual env
 py3/
+py38/
 #
 .idea
 *.pyc
