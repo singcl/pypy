@@ -6,7 +6,7 @@ import aiohttp
 PATTERN = re.compile(r'\<title\>(?P<title>.*)\<\/title\>')
 
 async def fetch_page(session, url):
-    async with session.get(url, ssl=False) as resp:
+    async with session.get(url, ssl=True) as resp:
         return await resp.text()
 
 async def show_title(url):
@@ -18,6 +18,7 @@ def main():
     urls = ('https://www.python.org/',
             'https://git-scm.com/',
             'https://www.jd.com/',
+            'https://imcoco.top/',
             'https://www.taobao.com/',
             'https://www.douban.com/')
 
