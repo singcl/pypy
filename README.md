@@ -41,8 +41,8 @@ pip install pycryptodome
 # 不然会安装失败
 ```
 
-#生成requirements.txt
-python项目中必须包含一个 requirements.txt 文件，用于记录所有依赖包及其精确的版本号。以便新环境部署。
+#生成 requirements.txt
+python 项目中必须包含一个 requirements.txt 文件，用于记录所有依赖包及其精确的版本号。以便新环境部署。
 
 ```sh
 # 自动生成
@@ -51,3 +51,11 @@ python项目中必须包含一个 requirements.txt 文件，用于记录所有�
 (venv) $ pip install -r requirements.txt
 ```
 
+```python
+    #获取当前文件的绝对路径直接
+    # os.path.abspath(__file__)
+    # 获取当前文件夹所在的路径 直接
+    # os.path.dirname(os.path.abspath(__file__))
+
+    pic = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'mm.png')
+```
