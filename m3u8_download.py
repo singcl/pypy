@@ -12,6 +12,11 @@ from concurrent.futures import ThreadPoolExecutor
 """
 a dataclass that describes a programming language
 dataclass: https://www.jianshu.com/p/bea5c202cf85
+
+Version: 0.1
+Author: Singcl
+Date: 2019-12-29
+Github: https://github.com/singcl/pypy
 """
 
 TS_DIR = "video"
@@ -36,6 +41,9 @@ class DownLoad_M3U8(object):
             self.file_name = 'new.mp4'
 
     def get_ts_url(self):
+        """
+        解析标准的m3u8文件
+        """
         m3u8_obj = m3u8.load(self.m3u8_url)
         base_uri = m3u8_obj.base_uri
 
@@ -43,12 +51,18 @@ class DownLoad_M3U8(object):
             yield urljoin(base_uri, seg.uri)
 
     def download_single_ts(self, urlinfo):
+        """
+        同步下载单个TS文件并写入本地
+        """
         url, ts_name = urlinfo
         res = requests.get(url, headers=self.headers)
         with open("{}/{}".format(TS_DIR, ts_name), 'wb') as fp:
             fp.write(res.content)
 
     def download_all_ts(self):
+        """
+        线程池下载所有ts文件
+        """
         ts_urls = self.get_ts_url()
         for index, ts_url in enumerate(ts_urls):
             print(ts_url)
@@ -57,6 +71,9 @@ class DownLoad_M3U8(object):
         self.threadpool.shutdown()
 
     def run(self):
+        """
+        下载 => 合并 => 删除
+        """
         self.download_all_ts()
         ts_path = f'{TS_DIR}/*.ts'
         with open(f'{TS_DIR}/{self.file_name}', 'wb') as fn:
