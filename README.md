@@ -3,10 +3,18 @@
 Python 之路
 
 _The way to Python._
+## Windows安装Python38(Python27同理)
+1. 官网下载python`https://www.python.org/downloads/`
+2. 自定义安装Python到C:/Python38
+3. 设置环境变量:PYTHON_HOME: C:/Python38
+4. Path 中添加: ;%PYTHON_HOME%;%PYTHON_HOME%Scripts
 
 ## virtualenv 安装 Py2 Py3
 
 ```sh
+# 安装virtualenv
+pip install virtualenv
+
 # Python27 虚拟环境
 virtualenv -p C:/Python27/python.exe py2
 
