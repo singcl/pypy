@@ -17,6 +17,7 @@ Version: 0.1
 Author: Singcl
 Date: 2019-12-29
 Github: https://github.com/singcl/pypy
+Python >= 3.8.0
 """
 
 TS_DIR = "video"
