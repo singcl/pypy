@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 import time
+import json
 import m3u8
 import requests
 from glob import iglob
@@ -88,12 +89,13 @@ class DownLoad_M3U8(object):
 
 if __name__ == '__main__':
 
-    m3u8_url = 'https://v3.szjal.cn/20191220/eOuDB137/800kb/hls/index.m3u8'
-    file_name = ''
-
+    json_source = os.path.join(os.path.dirname(
+        os.path.abspath(__file__)), 'video', 'video_list.json')
+    with open(json_source, 'r', encoding='utf-8') as f:
+        videos = json.load(f)
     start = time.time()
 
-    M3U8 = DownLoad_M3U8(m3u8_url, file_name)
+    M3U8 = DownLoad_M3U8(videos["url"], videos["url"])
     M3U8.run()
 
     end = time.time()
