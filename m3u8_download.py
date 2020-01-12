@@ -23,6 +23,11 @@ Python >= 3.8.0
 
 TS_DIR = "video"
 
+# 代理设置
+proxies = {
+    "http": "http://127.0.0.1:1080",
+    "https": "http://127.0.0.1:1080",
+}
 
 @dataclass
 class DownLoad_M3U8(object):
@@ -57,7 +62,7 @@ class DownLoad_M3U8(object):
         同步下载单个TS文件并写入本地
         """
         url, ts_name = urlinfo
-        res = requests.get(url, headers=self.headers)
+        res = requests.get(url, headers=self.headers, proxies=proxies)
         with open("{}/{}".format(TS_DIR, ts_name), 'wb') as fp:
             fp.write(res.content)
 
@@ -93,10 +98,13 @@ if __name__ == '__main__':
         os.path.abspath(__file__)), 'video', 'video_list.json')
     with open(json_source, 'r', encoding='utf-8') as f:
         videos = json.load(f)
-    start = time.time()
 
-    M3U8 = DownLoad_M3U8(videos["url"], videos["url"])
-    M3U8.run()
+    start = time.time()
+    # @TODO再定义一个线程池（max_workers=1）这样就可以一个一个下载电影啦？
+
+    for item in videos:
+        M3U8 = DownLoad_M3U8(item["source"], item["name"])
+        M3U8.run()
 
     end = time.time()
     print('耗时:', "{}ms".format(end - start))
