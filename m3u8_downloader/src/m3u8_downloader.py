@@ -53,7 +53,7 @@ class M3U8Download:
     def analysis(self, source_url):
         try:
             self._url_seed = re.split(
-                "/\w+\.m3u8", source_url)[0]  # 从资源控制文件链接解析域名
+                "/\w+\.m3u8", source_url)[0]  # 从资源控制文件链接解析域名  // 错误解析方式，不通用。 singcl
             with requests.get(source_url) as r:  # 访问资源控制文件,获得资源信息
                 src = re.split("\n*#.+\n", r.text)  # 解析资源信息
                 for sub_src in src:  # 将资源地址储存到任务字典
