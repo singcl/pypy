@@ -14,6 +14,10 @@ import threading
 from my_lib.retry import retry
 from my_lib.time_statistics import time_statistics
 
+"""
+该下载器有很多bug,只可参考实现方式，不能直接使用
+"""
+
 
 class M3U8Download:
     _path = "./resource\\"  # 本地文件路径
@@ -42,7 +46,7 @@ class M3U8Download:
             tree = html.fromstring(r.content)
             try:
                 # 嗅探资源控制文件链接,这里只针对一个资源控制文件
-                source_url = tree.xpath('//video//source/@src')[0]
+                source_url = tree.xpath('//video//source/@src')[0]  # // 错误解析方式，不通用。 singcl
                 # self._url_seed = re.split("/\w+\.m3u8", source_url)[0]  # 从资源控制文件链接解析域名
             except Exception as e:
                 print("Video资源获取失败：", e)
