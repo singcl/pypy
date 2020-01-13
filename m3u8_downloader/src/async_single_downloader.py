@@ -19,31 +19,37 @@ Date: 2020-01-12
 
 
 class DownloadTS(object):
-    _path: str = "./resource\\"  # 本地文件路径
+    _path: str  # 本地文件路径
     _headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36'}
     ts_info: list
-    def __init__(self, ts_info: list):
+
+    def __init__(self, ts_info: list, path: str = "./resource\\"):
         self.ts_info = ts_info
+        self._path = path
         if not os.path.exists(self._path):  # 检测本地目录存在否
             os.makedirs(self._path)
 
     @retry()
-    async def download(self):
+    async def download(self, sem_num=500):
+        """
+        异步下载 默认最多并发为500
+        """
         ts_name, ts_url = self.ts_info
-        async with aiohttp.ClientSession() as session:
-            async with session.get(ts_url) as resp:
-                try:
-                    if not resp.status == 200:
-                        raise f"网络异常：{resp.status}"
-                    
-                    with open("{}/{}".format(self._path, ts_name), "wb") as file:
-                        content = await resp.read()
-                        file.write(content)
-                except Exception as e:
-                    print(e)
-                else:
-                    print(f"{ts_url} -> OK")
+        async with asyncio.Semaphore(sem_num):
+            async with aiohttp.ClientSession() as session:
+                async with session.get(ts_url) as resp:
+                    try:
+                        if not resp.status == 200:
+                            raise f"网络异常：{resp.status}"
+
+                        with open("{}/{}".format(self._path, ts_name), "wb") as file:
+                            content = await resp.read()
+                            file.write(content)
+                    except Exception as e:
+                        print(e)
+                    else:
+                        print(f"{ts_url} -> OK")
 
     @time_statistics
     def run(self):
@@ -52,5 +58,7 @@ class DownloadTS(object):
         loop = asyncio.get_event_loop()
         loop.run_until_complete(asyncio.wait(tasks))
 
+
 if __name__ == "__main__":
-    DownloadTS(["xxxx", "http://qlyy369.com/template/helen_ten/js/jquery.lazyload.js"]).run()
+    DownloadTS(
+        ["xxxx", "http://qlyy369.com/template/helen_ten/js/jquery.lazyload.js"]).run()

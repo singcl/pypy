@@ -8,6 +8,8 @@ import os
 import json
 import m3u8
 from urllib.parse import urljoin
+from natsort import natsorted
+from glob import iglob
 
 """
 协程并发下载
@@ -21,12 +23,14 @@ Date: 2020-01-12
 class DownloadM3U8(object):
     m3u8_name: str
     m3u8_source: str
+    m3u8_path: str
     m3u8_info: list
 
-    def __init__(self, m3u8_info: list):
+    def __init__(self, m3u8_info: list, m3u8_path: str = "./resource\\"):
         self.m3u8_info = m3u8_info
         self.m3u8_name = m3u8_info[0]
         self.m3u8_source = m3u8_info[1]
+        self.m3u8_path = m3u8_path
 
     def get_ts_urls(self):
         """
@@ -37,15 +41,32 @@ class DownloadM3U8(object):
         for seg in m3u8_obj.segments:
             yield urljoin(base_uri, seg.uri)
 
-    def download(self):
+    def download(self, sem_num=500):
         """
         并发下载m3u8所有TS文件
         """
         ts_urls = self.get_ts_urls()
-        tasks = [asyncio.ensure_future(DownloadTS([f'{index}.ts', url]).download())
+        tasks = [asyncio.ensure_future(DownloadTS([f'{index}.ts', url], self.m3u8_path).download(sem_num))
                  for index, url in enumerate(ts_urls)]
         loop = asyncio.get_event_loop()
         loop.run_until_complete(asyncio.wait(tasks))
+        loop.close()
+
+    def combine(self):
+        """
+        合并 => 删除
+        """
+        ts_path = os.path.join(self.m3u8_path, "*.ts")
+        with open(os.path.join(self.m3u8_path, self.m3u8_name), "wb") as file:
+            for ts in natsorted(iglob(ts_path)):
+                with open(ts, "rb") as tf:
+                    file.write(tf.read())
+        for ts in iglob(ts_path):
+            os.remove(ts)
+
+    def run(self):
+        self.download(5)
+        self.combine()
 
 
 @time_statistics
@@ -55,7 +76,9 @@ def main():
     with open(json_source, 'r', encoding='utf-8') as f:
         json_source_list = json.load(f)
     video = json_source_list[-1]
-    DownloadM3U8([video["name"], video["source"]]).download()
+    m3u8_path = os.path.join(os.path.dirname(
+        os.path.abspath(__file__)), "庆余年全集", video["name"])
+    DownloadM3U8([video["name"], video["source"]], m3u8_path).run()
 
 
 if __name__ == "__main__":
