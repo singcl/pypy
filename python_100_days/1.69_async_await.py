@@ -31,12 +31,13 @@ def main():
         # 'http://www.sohu.com/',
         # 'http://www.sina.com.cn/',
         # 'https://www.jd.com/',
-        'https://www.taobao.com/',
+        'https://baidu.com',
         'https://imcoco.top'
     ]
     corutines = [download(url) for url in urls]
-    loop.run_until_complete(asyncio.wait(corutines))
-    loop.close()
+    ft = asyncio.ensure_future(asyncio.wait(corutines))
+    ft.add_done_callback(lambda *ags: print("完成！"))
+    loop.run_until_complete(ft)
 
 
 if __name__ == '__main__':
