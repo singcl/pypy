@@ -67,3 +67,11 @@ python 项目中必须包含一个 requirements.txt 文件，用于记录所有�
 
     pic = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'mm.png')
 ```
+
+### ValueError: too many file descriptors in select()错误和解决
+
+因为asyncio内部用到了select，而select就是系统打开文件数是有限度的，
+这个其实是操作系统的限制，linux打开文件的最大数默认是1024，windows默认是509，超过了这个值，程序就开始报错
+解决：限制并发量： semaphore = asyncio.Semaphore(100); async with semaphore:
+
+详情查看`pypy\m3u8_downloader\src\async_m3u8_downloader.py`

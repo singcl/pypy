@@ -22,11 +22,15 @@ Date: 2020-01-12
 
 
 class DownloadM3U8(object):
-    m3u8_name: str
-    m3u8_source: str
-    m3u8_directory: str
+    """
+    异步并发下载M3U8资源
+    自动合并为媒体文件
+    """
+    m3u8_name: str # 电影名字
+    m3u8_source: str # m3u8路径
+    m3u8_directory: str # 电影保存目录
     m3u8_info: list
-    m3u8_temp_dir: str
+    m3u8_temp_dir: str # ts文件临时目录
 
     def __init__(self, m3u8_info: list):
         self.m3u8_info = m3u8_info
@@ -50,8 +54,12 @@ class DownloadM3U8(object):
     def download(self):
         """
         并发下载m3u8所有TS文件
+        ValueError: too many file descriptors in select()错误和解决
+        因为asyncio内部用到了select，而select就是系统打开文件数是有限度的，
+        这个其实是操作系统的限制，linux打开文件的最大数默认是1024，windows默认是509，超过了这个值，程序就开始报错
+        解决：限制并发量： semaphore = asyncio.Semaphore(100); async with semaphore:
         """
-        semaphore = asyncio.Semaphore(100)
+        semaphore = asyncio.Semaphore(100) # 已经要放在这里才生效？？
         ts_urls = self.get_ts_urls()
         tasks = [DownloadTS([f'{index}.ts', url], self.m3u8_temp_dir).download(semaphore)
                  for index, url in enumerate(ts_urls)]
@@ -79,6 +87,9 @@ class DownloadM3U8(object):
         os.rmdir(self.m3u8_temp_dir)
 
     def run(self):
+        """
+        下载 => 合并
+        """
         self.download()
         self.combine()
 
