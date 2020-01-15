@@ -10,6 +10,7 @@ import m3u8
 from urllib.parse import urljoin
 from natsort import natsorted
 from glob import iglob
+import re
 
 """
 协程并发下载
@@ -23,14 +24,19 @@ Date: 2020-01-12
 class DownloadM3U8(object):
     m3u8_name: str
     m3u8_source: str
-    m3u8_path: str
+    m3u8_directory: str
     m3u8_info: list
+    m3u8_temp_dir: str
 
-    def __init__(self, m3u8_info: list, m3u8_path: str = "./resource\\"):
+    def __init__(self, m3u8_info: list):
         self.m3u8_info = m3u8_info
         self.m3u8_name = m3u8_info[0]
         self.m3u8_source = m3u8_info[1]
-        self.m3u8_path = m3u8_path
+        self.m3u8_directory = m3u8_info[2]
+        self.m3u8_video_dir = os.path.join(os.path.dirname(
+        os.path.abspath(__file__)), self.m3u8_directory)
+        self.m3u8_temp_dir = os.path.join(os.path.dirname(
+        os.path.abspath(__file__)), self.m3u8_directory, self.m3u8_name)
 
     def get_ts_urls(self):
         """
@@ -47,7 +53,7 @@ class DownloadM3U8(object):
         """
         semaphore = asyncio.Semaphore(100)
         ts_urls = self.get_ts_urls()
-        tasks = [DownloadTS([f'{index}.ts', url], self.m3u8_path).download(semaphore)
+        tasks = [DownloadTS([f'{index}.ts', url], self.m3u8_temp_dir).download(semaphore)
                  for index, url in enumerate(ts_urls)]
         ft = asyncio.ensure_future(asyncio.wait(tasks))
         ft.add_done_callback(lambda *args: print("完成下载！"))
@@ -58,13 +64,19 @@ class DownloadM3U8(object):
         """
         合并 => 删除
         """
-        ts_path = os.path.join(self.m3u8_path, "*.ts")
-        with open(os.path.join(self.m3u8_path, self.m3u8_name), "wb") as file:
+        ts_path = os.path.join(self.m3u8_temp_dir, "*.ts")
+        if re.search(r"\.(mp4|avi)$", self.m3u8_name, re.I) == None:
+            media_name = f"{self.m3u8_name}.mp4"
+        else:
+            media_name = self.m3u8_name
+        with open(os.path.join(self.m3u8_video_dir, media_name), "wb") as file:
             for ts in natsorted(iglob(ts_path)):
                 with open(ts, "rb") as tf:
                     file.write(tf.read())
+        #
         for ts in iglob(ts_path):
             os.remove(ts)
+        os.rmdir(self.m3u8_temp_dir)
 
     def run(self):
         self.download()
@@ -78,9 +90,7 @@ def main():
     with open(json_source, 'r', encoding='utf-8') as f:
         json_source_list = json.load(f)
     video = json_source_list[-1]
-    m3u8_path = os.path.join(os.path.dirname(
-        os.path.abspath(__file__)), "庆余年全集", video["name"])
-    DownloadM3U8([video["name"], video["source"]], m3u8_path).run()
+    DownloadM3U8([video["name"], video["source"], video["directory"]]).run()
 
 
 if __name__ == "__main__":
