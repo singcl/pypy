@@ -17,15 +17,20 @@ Date: 2020-01-15
 """
 
 
-def main(json_path: str = 'download_list.json'):
+def main(json_path: str = 'download_list.json', number=None):
     json_source = os.path.join(os.path.dirname(
         os.path.abspath(__file__)), json_path)
     with open(json_source, 'r', encoding='utf-8') as f:
         json_source_list = json.load(f)
-    # video = json_source_list[-1] # 下载一集
-    for video in json_source_list:
+
+    if number is not None:
+        video = json_source_list[int(number) - 1]  # 下载一集
         DownloadM3U8([video["name"], video["source"],
                       video["directory"]]).run()
+    else:
+        for video in json_source_list:
+            DownloadM3U8([video["name"], video["source"],
+                          video["directory"]]).run()
 
 
 if __name__ == "__main__":
@@ -34,8 +39,8 @@ if __name__ == "__main__":
     """
     try:
         json_file = sys.argv[1]
+        number = sys.argv[2]
     except IndexError as e:
         main()
     else:
-        main(json_file)
-
+        main(json_file, number)
