@@ -41,16 +41,18 @@ class DownloadM3U8(object):
         for seg in m3u8_obj.segments:
             yield urljoin(base_uri, seg.uri)
 
-    def download(self, sem_num=500):
+    def download(self):
         """
         并发下载m3u8所有TS文件
         """
+        semaphore = asyncio.Semaphore(100)
         ts_urls = self.get_ts_urls()
-        tasks = [asyncio.ensure_future(DownloadTS([f'{index}.ts', url], self.m3u8_path).download(sem_num))
+        tasks = [DownloadTS([f'{index}.ts', url], self.m3u8_path).download(semaphore)
                  for index, url in enumerate(ts_urls)]
+        ft = asyncio.ensure_future(asyncio.wait(tasks))
+        ft.add_done_callback(lambda *args: print("完成下载！"))
         loop = asyncio.get_event_loop()
-        loop.run_until_complete(asyncio.wait(tasks))
-        loop.close()
+        loop.run_until_complete(ft)
 
     def combine(self):
         """
@@ -65,7 +67,7 @@ class DownloadM3U8(object):
             os.remove(ts)
 
     def run(self):
-        self.download(5)
+        self.download()
         self.combine()
 
 

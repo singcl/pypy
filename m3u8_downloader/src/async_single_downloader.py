@@ -31,12 +31,12 @@ class DownloadTS(object):
             os.makedirs(self._path)
 
     @retry()
-    async def download(self, sem_num=500):
+    async def download(self, semaphore=None):
         """
         异步下载 默认最多并发为500
         """
         ts_name, ts_url = self.ts_info
-        async with asyncio.Semaphore(sem_num):
+        async with semaphore:
             async with aiohttp.ClientSession() as session:
                 async with session.get(ts_url) as resp:
                     try:
@@ -53,8 +53,9 @@ class DownloadTS(object):
 
     @time_statistics
     def run(self):
+        semaphore = asyncio.Semaphore(100)
         tasks = []
-        tasks.append(asyncio.ensure_future(self.download()))
+        tasks.append(asyncio.ensure_future(self.download(semaphore)))
         loop = asyncio.get_event_loop()
         loop.run_until_complete(asyncio.wait(tasks))
 
