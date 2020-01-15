@@ -64,7 +64,7 @@ class DownloadM3U8(object):
         tasks = [DownloadTS([f'{index}.ts', url], self.m3u8_temp_dir).download(semaphore)
                  for index, url in enumerate(ts_urls)]
         ft = asyncio.ensure_future(asyncio.wait(tasks))
-        ft.add_done_callback(lambda *args: print("完成下载！"))
+        ft.add_done_callback(lambda *args: print(f"{self.m3u8_name}完成下载！"))
         loop = asyncio.get_event_loop()
         loop.run_until_complete(ft)
 
@@ -86,6 +86,7 @@ class DownloadM3U8(object):
             os.remove(ts)
         os.rmdir(self.m3u8_temp_dir)
 
+    @time_statistics()
     def run(self):
         """
         下载 => 合并
@@ -93,16 +94,14 @@ class DownloadM3U8(object):
         self.download()
         self.combine()
 
-
-@time_statistics
 def main():
     json_source = os.path.join(os.path.dirname(
         os.path.abspath(__file__)), '', 'download_list.json')
     with open(json_source, 'r', encoding='utf-8') as f:
         json_source_list = json.load(f)
-    video = json_source_list[-1]
-    DownloadM3U8([video["name"], video["source"], video["directory"]]).run()
-
+    # video = json_source_list[-1] # 下载一集
+    for video in json_source_list:
+        DownloadM3U8([video["name"], video["source"], video["directory"]]).run()
 
 if __name__ == "__main__":
     main()

@@ -1,22 +1,11 @@
 [
     {
-        "name": "xxxx",
-        "source": "http://qlyy369.com/template/helen_ten/js/jquery.lazyload.js"
+        "directory": "庆余年全集",
+        "name": "庆余年-第三十七集",
+        "source": "https://v3.szjal.cn/20191220/eOuDB137/800kb/hls/index.m3u8"
     },
     {
-        "name": "xxxx2",
-        "source": "https://common.cnblogs.com/scripts/jquery-2.2.0.min.js"
-    },
-    {
-        "name": "xxxx3",
-        "source": "https://common.cnblogs.com/highlight/9.12.0/highlight.min.js"
-    },
-    {
-        "name": "xxxx4",
-        "source": "https://cdn.ampproject.org/rtv/011912050130240/amp4ads-host-v0.js"
-    },
-    {
-        "directory": "庆余年全集-singcl",
+        "directory": "庆余年全集",
         "name": "庆余年-第三十八集",
         "source": "https://v3.szjal.cn/20191220/eOuDB137/800kb/hls/index.m3u8"
     }

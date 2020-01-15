@@ -51,7 +51,7 @@ class DownloadTS(object):
                     else:
                         print(f"{ts_url} -> OK")
 
-    @time_statistics
+    @time_statistics()
     def run(self):
         semaphore = asyncio.Semaphore(100)
         tasks = []
