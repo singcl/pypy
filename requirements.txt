@@ -27,6 +27,7 @@ natsort==6.2.0
 pycodestyle==2.4.0
 pylint==2.4.4
 PyYAML==3.13
+pycryptodome==3.9.7
 requests==2.20.1
 six==1.13.0
 urllib3==1.24.1
