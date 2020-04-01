@@ -19,7 +19,7 @@ Jinja2==2.10
 lazy-object-proxy==1.4.3
 lxml==4.4.2
 m3u8==0.5.3
-MarkupSafe==1.0
+MarkupSafe==1.1.1
 mccabe==0.6.1
 multidict==4.7.0
 Naked==0.1.31
