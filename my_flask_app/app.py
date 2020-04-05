@@ -1,6 +1,6 @@
 # coding: utf-8
 
-from flask import Flask, escape, url_for
+from flask import Flask, escape, url_for, render_template, request, session
 
 app = Flask(__name__)
 
@@ -25,8 +25,9 @@ def login():
     """
 
 @app.route('/hello')
-def hello():
-    return "hello world"
+@app.route('/hello/<name>')
+def hello(name=None):
+    return render_template('hello.html', name=name)
 
 @app.route("/user/<username>")
 def show_user_profile(username):
