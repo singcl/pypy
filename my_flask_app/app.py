@@ -10,10 +10,14 @@ def index():
     login_url = url_for("login")
     return f"<a href=\"{login_url}\">登陆</a>"
 
-@app.route("/login")
+@app.route("/login", methods=['GET', 'POST'])
 def login():
-    profile_url = url_for('show_user_profile', username='singcl')
+    profile_url = url_for("show_user_profile", username='singcl')
+    base_css_url = url_for("static", filename="style.css")
     return f"""
+    <head>
+        <link rel="stylesheet" type="text/css" href="{base_css_url}" />
+    </head>
     <div style='text-align: center'>
         <p>欢迎来到登陆页面</p>
         <a href="{profile_url}">个人简介</a>
