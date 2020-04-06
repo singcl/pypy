@@ -14,9 +14,8 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 # Set the secret key to some random bytes. Keep this really secret!
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
- # 目录是否存在,不存在则创建
+# 目录是否存在,不存在则创建
 mkdirlambda =lambda x: os.makedirs(x) if not os.path.exists(x)  else True
-mkdirlambda(UPLOAD_FOLDER)
 
 @app.route('/')
 def index():
@@ -87,6 +86,7 @@ def upload_file():
             flash('不允许上传该类型文件！')
             return redirect(request.url)
         filename = secure_filename(file.filename)
+        mkdirlambda(UPLOAD_FOLDER)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         return redirect(url_for('uploaded_file', filename=filename))
     return render_template('upload_message.html')
@@ -94,4 +94,5 @@ def upload_file():
 # 浏览上传文件
 @app.route("/uploads/<filename>")
 def uploaded_file(filename):
+    mkdirlambda(UPLOAD_FOLDER)
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
