@@ -1,8 +1,22 @@
 # coding: utf-8
 
-from flask import Flask, escape, url_for, render_template, request, session
+from flask import Flask, escape, url_for, render_template, request,flash, redirect, send_from_directory
+import os
+from werkzeug.utils import secure_filename
+
+UPLOAD_FOLDER = 'upload'
+ALLOW_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
+
 
 app = Flask(__name__)
+
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+# Set the secret key to some random bytes. Keep this really secret!
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+
+ # 目录是否存在,不存在则创建
+mkdirlambda =lambda x: os.makedirs(x) if not os.path.exists(x)  else True
+mkdirlambda(UPLOAD_FOLDER)
 
 @app.route('/')
 def index():
@@ -51,3 +65,33 @@ def projects():
 @app.route('/about')
 def about():
     return 'The about page'
+
+# 文件上传
+def allowed_files(filename: str):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOW_EXTENSIONS
+
+@app.route('/upload', methods=['GET', 'POST'])
+def upload_file():
+    if (request.method == 'POST'):
+        # check if the post request has the file part
+        if ('file' not in request.files):
+            flash('No file part')
+            return redirect(request.url)
+        file = request.files['file']
+        # if user does not select file, browser also
+        # submit an empty part without filename
+        if (file.filename == ''):
+            flash('No selected file')
+            return redirect(request.url)
+        if (not allowed_files(file.filename)):
+            flash('不允许上传该类型文件！')
+            return redirect(request.url)
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        return redirect(url_for('uploaded_file', filename=filename))
+    return render_template('upload_message.html')
+
+# 浏览上传文件
+@app.route("/uploads/<filename>")
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
