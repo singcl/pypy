@@ -1,6 +1,6 @@
 # coding: utf-8
 
-from flask import Flask, escape, url_for, render_template, request,flash, redirect, send_from_directory, make_response
+from flask import Flask, escape, url_for, render_template, request,flash, redirect, send_from_directory, make_response, jsonify
 import os
 from werkzeug.utils import secure_filename
 
@@ -102,3 +102,8 @@ def upload_file():
 def uploaded_file(filename):
     mkdirlambda(UPLOAD_FOLDER)
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
+@app.route('/json')
+def json_res():
+    json = make_response(jsonify({"name": "singcl", "home": "https://github.com/singcl"}))
+    return json
