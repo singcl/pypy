@@ -1,6 +1,6 @@
 # coding: utf-8
 
-from flask import Flask, escape, url_for, render_template, request,flash, redirect, send_from_directory
+from flask import Flask, escape, url_for, render_template, request,flash, redirect, send_from_directory, make_response
 import os
 from werkzeug.utils import secure_filename
 
@@ -22,7 +22,9 @@ mkdirlambda =lambda x: os.makedirs(x) if not os.path.exists(x)  else True
 def index():
     # url_for 构造login url
     login_url = url_for("login")
-    return f"<a href=\"{login_url}\">登陆</a>"
+    response = make_response(f"<a href=\"{login_url}\">登陆</a>")
+    response.set_cookie("username", 'singcl')
+    return response
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
@@ -41,7 +43,10 @@ def login():
 @app.route('/hello')
 @app.route('/hello/<name>')
 def hello(name=None):
-    return render_template('hello.html', name=name)
+    username = request.cookies.get('username')
+    # use cookies.get(key) instead of cookies[key] to not get a
+    # KeyError if the cookie is missing.
+    return render_template('hello.html', name=name, username=username)
 
 @app.route("/user/<username>")
 def show_user_profile(username):
