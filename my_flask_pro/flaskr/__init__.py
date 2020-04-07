@@ -32,7 +32,12 @@ def create_app(test_config=None):
     def hello():
         return 'Hello, World!'
 
+    # 在工厂函数中初始化数据库
     from . import db
     db.init_app(app)
+
+    # 在工厂函数中注册认证蓝图
+    from . import auth
+    app.register_blueprint(auth.bp)
 
     return app
