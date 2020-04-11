@@ -9,16 +9,17 @@
 <body>
     <nav>
         <h1>Flaskr</h1>
+        <ul>
+            {% if g.user %}
+              <li><span>{{g.user['username']}}</span></li>
+              <li><a href="{{url_for('auth.logout')}}">Log out</a></li>
+              {% else %}
+              <li><a href="{{url_for('auth.register')}}">Register</a></li>
+              <li><a href="{{url_for('auth.login')}}">Log in</a></li>
+            {% endif %}
+        </ul>
     </nav>
-    <ul>
-        {% if g.user %}
-          <li><span>{{g.user['username']}}</span></li>
-          <li><a href="{{url_for('auth.logout')}}">LOG OUT</a></li>
-          {% else %}
-          <li><a href="{{url_for('auth.register')}}">Register</a></li>
-          <li><a href="{{url_for('auth.login')}}">LOG IN</a></li>
-        {% endif %}
-    </ul>
+
     <div class="content">
         <header>
             {% block header %}{% endblock %}
