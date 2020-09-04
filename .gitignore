@@ -7,3 +7,6 @@ py38/
 .idea
 *.pyc
 video/**/*
+
+#
+.DS_Store
