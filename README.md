@@ -3,11 +3,13 @@
 Python 之路
 
 _The way to Python._
-## Windows安装Python38(Python27同理)
-1. 官网下载python`https://www.python.org/downloads/`
-2. 自定义安装Python到C:/Python38
+
+## Windows 安装 Python38(Python27 同理)
+
+1. 官网下载 python`https://www.python.org/downloads/`
+2. 自定义安装 Python 到 C:/Python38
 3. 设置环境变量:PYTHON_HOME: C:/Python38
-4. Path 中添加: ;%PYTHON_HOME%;%PYTHON_HOME%Scripts
+4. Path 中添加: ;%PYTHON_HOME%;%PYTHON_HOME%\Scripts
 
 ## virtualenv 安装 Py2 Py3
 
@@ -70,8 +72,8 @@ python 项目中必须包含一个 requirements.txt 文件，用于记录所有�
 
 ### ValueError: too many file descriptors in select()错误和解决
 
-因为asyncio内部用到了select，而select就是系统打开文件数是有限度的，
-这个其实是操作系统的限制，linux打开文件的最大数默认是1024，windows默认是509，超过了这个值，程序就开始报错
+因为 asyncio 内部用到了 select，而 select 就是系统打开文件数是有限度的，
+这个其实是操作系统的限制，linux 打开文件的最大数默认是 1024，windows 默认是 509，超过了这个值，程序就开始报错
 解决：限制并发量： semaphore = asyncio.Semaphore(100); async with semaphore:
 
 详情查看`pypy\m3u8_downloader\src\async_m3u8_downloader.py`
