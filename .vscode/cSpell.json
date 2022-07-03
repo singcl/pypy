@@ -6,25 +6,30 @@
     "language": "en",
     // words - list of words to be always considered correct
     "words": [
-        "mkdirp",
-        "tsmerge",
-        "githubusercontent",
-        "streetsidesoftware",
-        "vsmarketplacebadge",
-        "visualstudio",
-        "phead",
-        "dsbridge",
-        "Backpressed",
-        "singcl",
-        "asyncio",
         "aiohttp",
-        "corutines",
+        "asyncio",
+        "Backpressed",
         "cclient",
+        "corutines",
+        "dsbridge",
+        "githubusercontent",
+        "iglob",
+        "lxml",
+        "mkdirp",
+        "natsort",
+        "natsorted",
+        "phead",
+        "singcl",
+        "streetsidesoftware",
+        "tsmerge",
         "virtualenv",
-        "iglob"
+        "visualstudio",
+        "vsmarketplacebadge"
     ],
     // flagWords - list of words to be always considered incorrect
     // This is useful for offensive words and common spelling errors.
     // For example "hte" should be "the"
-    "flagWords": ["hte"]
+    "flagWords": [
+        "hte"
+    ]
 }
