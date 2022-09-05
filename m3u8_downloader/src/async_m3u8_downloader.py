@@ -96,7 +96,7 @@ class DownloadM3U8(object):
 
 def main():
     json_source = os.path.join(os.path.dirname(
-        os.path.abspath(__file__)), '', 'download_list.json')
+        os.path.abspath(__file__)), '', '天龙八部.json')
     with open(json_source, 'r', encoding='utf-8') as f:
         json_source_list = json.load(f)
     # video = json_source_list[-1] # 下载一集
