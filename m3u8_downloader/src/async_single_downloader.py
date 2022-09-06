@@ -21,7 +21,8 @@ Date: 2020-01-12
 class DownloadTS(object):
     _path: str  # 本地文件路径
     _headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36'}
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36'
+    }
     ts_info: list
 
     def __init__(self, ts_info: list, path: str = "./resource\\"):
@@ -62,4 +63,4 @@ class DownloadTS(object):
 
 if __name__ == "__main__":
     DownloadTS(
-        ["xxxx", "http://qlyy369.com/template/helen_ten/js/jquery.lazyload.js"]).run()
+        ["xxxx", "https://t11.cdn2020.com:12336/video/m3u8/2021/09/04/d662110b/index.m3u8"]).run()
